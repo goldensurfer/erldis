@@ -1,41 +1,13 @@
-ERL					?= erl
-ERLC				= erlc
-EBIN_DIRS		:= $(wildcard deps/*/ebin)
+PROJECT = erldis
 
-.PHONY: rel deps
+ERLC_OPTS = +debug_info +warn_export_all +warn_export_vars +warn_shadow_vars +warn_obsolete_guard
 
-all: deps compile
+PLT_APPS = hipe sasl mnesia crypto compiler syntax_tools
+DIALYZER_OPTS = -Werror_handling -Wrace_conditions -Wunmatched_returns | fgrep -v -f ./dialyzer.ignore-warning
 
-compile: deps
-	@./rebar compile
+DEPS_DIR = ../../deps
+DEPS = gen_server2
 
-deps:
-	@./rebar get-deps
-	@./rebar check-deps
+dep_gen_server2 = http://github.com/mdaguete/gen_server2.git master
 
-clean:
-	@./rebar clean
-
-realclean: clean
-	@./rebar delete-deps
-
-tests:
-	@./rebar skip_deps=true eunit
-
-rel: deps
-	@./rebar compile generate
-
-doc:
-	rebar skip_deps=true doc
-
-console:
-	@erl -pa deps/*/ebin deps/*/include ebin include -boot start_sasl
-
-analyze: checkplt
-	@./rebar skip_deps=true dialyze
-
-buildplt:
-	@./rebar skip_deps=true build-plt
-
-checkplt: buildplt
-	@./rebar skip_deps=true check-plt
+include ../../erlang.mk
