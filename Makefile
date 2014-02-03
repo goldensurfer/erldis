@@ -10,4 +10,4 @@ DEPS = gen_server2
 
 dep_gen_server2 = http://github.com/mdaguete/gen_server2.git master
 
-include ../../erlang.mk
+include erlang.mk
