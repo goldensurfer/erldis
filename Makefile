@@ -8,6 +8,6 @@ DIALYZER_OPTS = -Werror_handling -Wrace_conditions -Wunmatched_returns | fgrep -
 DEPS_DIR = ../../deps
 DEPS = gen_server2
 
-dep_gen_server2 = https://github.com/goldensurfer/gen_server2.git master
+dep_gen_server2 = https://github.com/goldensurfer/gen_server2.git 1.2
 
 include erlang.mk
